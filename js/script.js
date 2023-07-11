@@ -1,31 +1,31 @@
-// Get the slider element
-var slider = document.querySelector('.slider');
+// Add your JavaScript code here
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
 
-// Get all the slides
-var slides = document.querySelectorAll('.slide');
+function showSlide(slideIndex) {
+  slides.forEach((slide) => {
+    slide.classList.remove('active');
+  });
 
-// Set the initial slide index
-var currentSlide = 0;
+  dots.forEach((dot) => {
+    dot.classList.remove('active');
+  });
 
-// Show the first slide
-slides[currentSlide].classList.add('active');
-
-// Function to show the next slide
-function nextSlide() {
-  // Remove the active class from the current slide
-  slides[currentSlide].classList.remove('active');
-
-  // Increment the slide index
-  currentSlide++;
-
-  // Wrap around to the first slide if at the end
-  if (currentSlide >= slides.length) {
-    currentSlide = 0;
-  }
-
-  // Add the active class to the next slide
-  slides[currentSlide].classList.add('active');
+  slides[slideIndex].classList.add('active');
+  dots[slideIndex].classList.add('active');
 }
 
-// Automatically show the next slide every 3 seconds
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    currentSlide = index;
+    showSlide(currentSlide);
+  });
+});
+
 setInterval(nextSlide, 3000);
